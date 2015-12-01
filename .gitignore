@@ -4,32 +4,50 @@
 # User-specific files
 *.suo
 *.user
+<<<<<<< 3347e38db575a6bc0840c1f17ad157088272336a
 *.userosscache
 *.sln.docstates
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+=======
+*.sln.docstates
+
+>>>>>>> Initial commit to add default .gitIgnore and .gitAttribute files.
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
+<<<<<<< 3347e38db575a6bc0840c1f17ad157088272336a
 [Rr]eleases/
 x64/
 x86/
+=======
+x64/
+>>>>>>> Initial commit to add default .gitIgnore and .gitAttribute files.
 build/
 bld/
 [Bb]in/
 [Oo]bj/
 
+<<<<<<< 3347e38db575a6bc0840c1f17ad157088272336a
 # Visual Studo 2015 cache/options directory
 .vs/
+=======
+# Roslyn cache directories
+*.ide/
+>>>>>>> Initial commit to add default .gitIgnore and .gitAttribute files.
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+<<<<<<< 3347e38db575a6bc0840c1f17ad157088272336a
 # NUNIT
+=======
+#NUNIT
+>>>>>>> Initial commit to add default .gitIgnore and .gitAttribute files.
 *.VisualState.xml
 TestResult.xml
 
@@ -129,6 +147,7 @@ publish/
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
+<<<<<<< 3347e38db575a6bc0840c1f17ad157088272336a
 # TODO: Comment the next line if you want to checkin your web deploy settings 
 # but database connection strings (with potential passwords) will be unencrypted
 *.pubxml
@@ -142,6 +161,24 @@ publish/
 !**/packages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/packages/repositories.config
+=======
+## TODO: Comment the next line if you want to checkin your
+## web deploy settings but do note that will include unencrypted
+## passwords
+#*.pubxml
+
+# NuGet Packages Directory
+packages/*
+## TODO: If the tool you use requires repositories.config
+## uncomment the next line
+#!packages/repositories.config
+
+# Enable "build/" folder in the NuGet Packages folder since
+# NuGet packages use it for MSBuild targets.
+# This line needs to be after the ignore of the build folder
+# (and the packages folder if the line above has been uncommented)
+!packages/build/
+>>>>>>> Initial commit to add default .gitIgnore and .gitAttribute files.
 
 # Windows Azure Build Output
 csx/
@@ -151,7 +188,12 @@ csx/
 AppPackages/
 
 # Others
+<<<<<<< 3347e38db575a6bc0840c1f17ad157088272336a
 *.[Cc]ache
+=======
+sql/
+*.Cache
+>>>>>>> Initial commit to add default .gitIgnore and .gitAttribute files.
 ClientBin/
 [Ss]tyle[Cc]op.*
 ~$*
@@ -161,7 +203,10 @@ ClientBin/
 *.pfx
 *.publishsettings
 node_modules/
+<<<<<<< 3347e38db575a6bc0840c1f17ad157088272336a
 bower_components/
+=======
+>>>>>>> Initial commit to add default .gitIgnore and .gitAttribute files.
 
 # RIA/Silverlight projects
 Generated_Code/
@@ -186,6 +231,7 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
+<<<<<<< 3347e38db575a6bc0840c1f17ad157088272336a
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
 
@@ -194,3 +240,9 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+=======
+# LightSwitch generated files
+GeneratedArtifacts/
+_Pvt_Extensions/
+ModelManifest.xml
+>>>>>>> Initial commit to add default .gitIgnore and .gitAttribute files.
