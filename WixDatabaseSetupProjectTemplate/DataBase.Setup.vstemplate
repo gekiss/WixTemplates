@@ -1,0 +1,27 @@
+<VSTemplate Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>Wix Database Setup Project</Name>
+    <Description>A project for creating a WiX-based Windows Installer MSI file</Description>
+    <Icon>WixProject.ico</Icon>
+    <ProjectType>WiX</ProjectType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>DataBase.Setup</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="$safeprojectname$.wixproj" File="DataBase.Setup.wixproj" ReplaceParameters="true">
+      <Folder Name="Bitmaps" TargetFolderName="Bitmaps" >
+        <ProjectItem ReplaceParameters="false" TargetFileName="Main.bmp">Main.bmp</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="Banner.bmp">Banner.bmp</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="ivis_all_in_one.ico">ivis_all_in_one.ico</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Binaries.wxs">Binaries.wxs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="SqlScripts.wxi">SqlScripts.wxi</ProjectItem>
+      <ProjectItem ReplaceParameters="true" OpenInEditor="true" TargetFileName="Product.wxi">Product.wxi</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Product.wxs">Product.wxs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

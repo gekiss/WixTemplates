@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <?define ProductVersion = "1.0.0.0" ?>
+  <?define ProductName = "$safeprojectname$" ?>
+  <?define ProductCode = "*" ?>
+  <?define ProductManufacturer = "$registeredorganization$" ?>
+
+  <?if $(var.Platform) = x86 ?>
+  <?define ProductUpgradeCode = "{$guid2$}" ?>
+  <?define win64Flag = "no" ?>
+  <?else ?>
+  <?define ProductUpgradeCode = "{$guid9$}" ?>
+  <?define win64Flag = "yes" ?>
+  <?endif ?>
+</Include>

@@ -1,0 +1,50 @@
+<VSContent xmlns="http://schemas.microsoft.com/developer/vscontent/2005">
+  <Content>
+    <FileName>WixSetupProjectTemplate.zip</FileName>
+    <FileContentType>VsTemplate</FileContentType>
+    <DisplayName>Wix setup project template</DisplayName>
+    <Description>WixSetupProjectTemplate</Description>
+    <ContentVersion>2.0</ContentVersion>
+    <Attributes>
+      <Attribute name="ProjectType" value="" />
+      <Attribute name="ProjectSubType" value="" />
+      <Attribute name="TemplateType" value="Project" />
+    </Attributes>
+  </Content>
+  <Content>
+    <FileName>WixWebSetupProjectTemplate.zip</FileName>
+    <FileContentType>VsTemplate</FileContentType>
+    <DisplayName>Wix web setup project template</DisplayName>
+    <Description>WixWebSetupProjectTemplate</Description>
+    <ContentVersion>2.0</ContentVersion>
+    <Attributes>
+      <Attribute name="ProjectType" value="" />
+      <Attribute name="ProjectSubType" value="" />
+      <Attribute name="TemplateType" value="Project" />
+    </Attributes>
+  </Content>
+  <Content>
+    <FileName>WixDatabaseSetupProjectTemplate.zip</FileName>
+    <FileContentType>VsTemplate</FileContentType>
+    <DisplayName>Wix database setup project template</DisplayName>
+    <Description>WixDatabaseSetupProjectTemplate</Description>
+    <ContentVersion>2.0</ContentVersion>
+    <Attributes>
+      <Attribute name="ProjectType" value="" />
+      <Attribute name="ProjectSubType" value="" />
+      <Attribute name="TemplateType" value="Project" />
+    </Attributes>
+  </Content>
+  <Content>
+    <FileName>WixDatabaseUpdateProjectTemplate.zip</FileName>
+    <FileContentType>VsTemplate</FileContentType>
+    <DisplayName>Wix database update setup project template</DisplayName>
+    <Description>WixDatabaseUpdateProjectTemplate</Description>
+    <ContentVersion>2.0</ContentVersion>
+    <Attributes>
+      <Attribute name="ProjectType" value="" />
+      <Attribute name="ProjectSubType" value="" />
+      <Attribute name="TemplateType" value="Project" />
+    </Attributes>
+  </Content>
+</VSContent>

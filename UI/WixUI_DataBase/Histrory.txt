@@ -1,0 +1,4 @@
+﻿CHANGE: Datubāzes nosaukumāatļauts punkta simbols.
+
+15.07.20008
+FIX: Noņemta klūdas izvadīšana dabujot datubāzes nosaukumu, ja nav tiesību.

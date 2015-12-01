@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <PropertyRef Id="IISMAJORVERSION"/>
+    <Binary Id="IIsScripts" SourceFile="IIsScripts.vbs" />
+    <Binary Id="WarningIcon" SourceFile="warning.ico" />
+    <CustomAction Id="IIS_ListWebSites" BinaryKey="IIsScripts" VBScriptCall="ListWebSites" Execute="immediate" Return="check"/>
+    <CustomAction Id="IIS_ListAppPools" BinaryKey="IIsScripts" VBScriptCall="ListAppPools" Execute="immediate" Return="check"/>
+    <CustomAction Id="IIS_EvaluateWebSiteProperties" BinaryKey="IIsScripts" VBScriptCall="EvaluateWebSiteProperties" Execute="immediate" Return="check"/>
+    <CustomAction Id="IIS_PopulateWebSiteProperties" BinaryKey="IIsScripts" VBScriptCall="PopulateWebSiteProperties" Execute="immediate" Return="check"/>
+    <CustomAction Id="IIS_CheckVirtualDirectoryName" BinaryKey="IIsScripts" VBScriptCall="CheckVirtualDirectoryName" Execute="immediate" Return="check"/>
+    <CustomAction Id="IIS_CheckApplicationPoolName" BinaryKey="IIsScripts" VBScriptCall="CheckApplicationPoolName" Execute="immediate" Return="check"/>
+    <CustomAction Id="IIS_SetApplicationPoolName" BinaryKey="IIsScripts" VBScriptCall="SetApplicationPoolName" Execute="immediate" Return="check"/>
+    
+    <InstallExecuteSequence>
+      <Custom Action="IIS_EvaluateWebSiteProperties" Before="RemoveFiles"><![CDATA[Installed]]></Custom>
+    </InstallExecuteSequence>
+    
+    <UI>
+      <Dialog Id="WebsiteDlg" X="50" Y="50" Width="370" Height="270" Title="[ProductName] Setup">
+        <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes" Text="{\WixUI_Font_Title}Configure Website" />
+        <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="Choose the Web Site under which to install the Web Service." />
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="!(loc.InstallDirDlgBannerBitmap)" />
+        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
+
+        <Control Id="VirtualDirLabel" Type="Text" X="20" Y="60" Width="290" Height="13" Text="Virtual directory:" />
+        <Control Id="VirtualDir" Type="Edit" X="20" Y="73" Width="320" Height="18" Property="IIS_VIRTUALDIR"/>
+        <Control Id="WebsiteLabel" Type="Text" X="20" Y="95" Width="290" Height="12" TabSkip="yes" Text="Site:" />
+        <Control Id="Website" Type="ComboBox" X="20" Y="107" Width="320" Height="120" TabSkip="no" Property="IIS_WEBSITE" ComboList="yes" Text="[IIS_WEBSITE]">
+          <ComboBox Property="_DEF_">
+            <ListItem Text="_DEF_" Value="_DEF_" />
+          </ComboBox>
+        </Control>
+        <Control Id="AppPoolLabel" Type="Text" X="20" Y="126" Width="290" Height="13" Text="Application Pool:" Hidden="yes">
+          <Condition Action="show"><![CDATA[IISMAJORVERSION > "#5"]]></Condition>
+        </Control>
+        <Control Id="AppPoolDirCombo" Type="ComboBox" X="20" Y="139" Width="320" Height="120" Property="IIS_APPPOOL" ComboList="yes" Hidden="yes" Text="[IIS_APPPOOL]">
+          <Condition Action="show"><![CDATA[IISMAJORVERSION > "#5"]]></Condition>
+          <Condition Action="enable"><![CDATA[IIS_CREATEAPPPOOL <> 1]]></Condition>
+          <Condition Action="disable"><![CDATA[IIS_CREATEAPPPOOL = 1]]></Condition>
+        </Control>
+        <Control Id="CreateAppPool" Type="CheckBox" X="20" Y="161" Width="226" Height="18" Property="IIS_CREATEAPPPOOL" CheckBoxValue="1" Text="Create new application pool"  Hidden ="yes">
+          <Condition Action="show"><![CDATA[IISMAJORVERSION > "#5"]]></Condition>
+        </Control >
+        <!--<Control Id="AppPoolDir" Type="Edit" X="20" Y="184" Width="320" Height="18" Property="IIS_NEWAPPPOOL" Hidden="yes">
+          <Condition Action="show"><![CDATA[IISMAJORVERSION > "#5"]]></Condition>
+          <Condition Action="enable"><![CDATA[IIS_CREATEAPPPOOL = 1]]></Condition>
+          <Condition Action="disable"><![CDATA[IIS_CREATEAPPPOOL <> 1]]></Condition>
+        </Control>-->
+        <Control Id="AppPollWarningIcon" Type="Icon" X="28" Y="206" Width="10" Height="10" IconSize="16" FixedSize="no" Text="WarningIcon">
+          <Condition Action="show"><![CDATA[IIS_CREATEAPPPOOL = 1]]></Condition>
+          <Condition Action="hide"><![CDATA[IIS_CREATEAPPPOOL <> 1]]></Condition>
+        </Control>
+        <Control Id="AppPoolWarning" Type="Text" X="42" Y="206" Width="286" Height="13" Text="Aplication Pool will be removed when uninstall program.">
+          <Condition Action="show"><![CDATA[IIS_CREATEAPPPOOL = 1]]></Condition>
+          <Condition Action="hide"><![CDATA[IIS_CREATEAPPPOOL <> 1]]></Condition>
+        </Control>
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)" >
+          <Publish Event="DoAction" Value="IIS_CheckVirtualDirectoryName" Order="1">1</Publish>
+          <!--<Publish Property="IIS_NEWAPPPOOL" Value="[IIS_VIRTUALDIR]" Order="2"><![CDATA[IIS_CREATEAPPPOOL = 1]]></Publish>-->
+          <Publish Event="DoAction" Value="IIS_SetApplicationPoolName" Order="3"><![CDATA[IIS_CREATEAPPPOOL = 1]]></Publish>
+          <Publish Event="DoAction" Value="IIS_CheckApplicationPoolName" Order="4"><![CDATA[IIS_CREATEAPPPOOL = 1]]></Publish>
+          <Publish Event="DoAction" Value="IIS_PopulateWebSiteProperties" Order="5"><![CDATA[IIS_CHECKVIRTUALDIR = "1" And ((IIS_CREATEAPPPOOL <> 1) Or (IIS_CREATEAPPPOOL = 1 And IIS_CHECKAPPPOOL = "1"))]]></Publish>
+        </Control>  
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="!(loc.WixUIBack)" />
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="!(loc.WixUICancel)">
+          <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+        </Control>
+      </Dialog>
+    </UI>
+  </Fragment>
+</Wix>

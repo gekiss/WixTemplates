@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) $registeredorganization$.  All rights reserved.
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir" FileSource="$(var.Product.ProjectDir)">
+      <!-- ADD Context files HERE -->
+      <!--<Component Id="Web.config" Guid="{$guid4$}">
+        <File Id="Web.config" Name="Web.config" />
+      </Component>-->
+    </Directory>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="Content">
+      <!--<ComponentRef Id="Web.config" />-->
+    </ComponentGroup>
+  </Fragment>
+</Wix>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <!-- ***  Detect Microsoft WSE 3.0  *** -->
+    <Property Id="WSE3" Secure="yes">
+      <RegistrySearch Id="Wse3Search" Root="HKLM" Key="SOFTWARE\Microsoft\WSE\{EDEA8AB7-7683-4ED2-AA19-E6C078064C0D}" Type="raw" />
+    </Property>
+
+    <!-- ***  Detect Microsoft WSE 2.0  *** -->
+    <Property Id="WSE2" Secure="yes">
+      <RegistrySearch Id="Wse2Search" Root="HKLM" Key="SOFTWARE\Microsoft\WSE\{6F396FFB-CC3A-4335-BC0B-2AEF38F4492C}" Type="raw" />
+    </Property>
+  </Fragment>
+</Wix>

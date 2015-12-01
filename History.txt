@@ -1,0 +1,14 @@
+﻿Project:	WixWebSetupProjectTemplate	
+File:		Product.wxs	
+CNG:		Product устанавливается под PerMachine
+
+Project:	WixWebSetupProjectTemplate	
+File:		Product.wxs	
+CNG:		Название медия теперь Product
+
+File:		IISComponents.wxs, Product.Setup.wixproj 
+NEW:		Поддержка IIS7 x32/x64, IIS < 7 только x32	
+
+Project:	WixWebSetupProjectTemplate	
+File:		IISComponents.wxs
+FIX:		для IIS7 добавилась проверка на установленную опцию IIS6 metadata compatibility	

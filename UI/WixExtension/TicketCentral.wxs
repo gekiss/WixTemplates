@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <!-- ***  Detect Diagnostic dll  *** -->
+    <Property Id="TICKETCENTRAL10" Secure="yes">
+      <RegistrySearch Id="TicketCentralV10" Root="HKLM" Key="Software\Abc software\TicketCentral v1.0" Name="InstallDir" Type="raw" />
+    </Property>
+  </Fragment>
+</Wix>

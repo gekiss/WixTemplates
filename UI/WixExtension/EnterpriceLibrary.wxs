@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) ABC Software.  All rights reserved.
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <!-- set to #1 if the Enterprice Library 3.1 is installed (not set otherwise) -->
+  <Fragment>
+    <Property Id="ENTERPRICELIBRARY31" Secure="yes">
+      <RegistrySearch Id="EnterproceLibraryV31" Root="HKLM" Key="Software\Microsoft\Enterprise Library" Name="InstallDir" Type="raw" />
+    </Property>
+  </Fragment>
+
+  <!-- set to #1 if the Enterprice Library 4.0 is installed (not set otherwise) -->
+  <Fragment>
+    <Property Id="ENTERPRICELIBRARY40" Secure="yes">
+      <RegistrySearch Id="EnterproceLibraryV40" Root="HKLM" Key="Software\Microsoft\Enterprise Library v4" Name="InstallDir" Type="raw" />
+    </Property>
+  </Fragment>
+
+  <!-- set to #1 if the Enterprice Library 4.1 is installed (not set otherwise) -->
+  <Fragment>
+    <Property Id="ENTERPRICELIBRARY41" Secure="yes">
+      <RegistrySearch Id="EnterproceLibraryV41" Root="HKLM" Key="Software\Microsoft\Enterprise Library v4.1" Name="InstallDir" Type="raw" />
+    </Property>
+  </Fragment>
+
+  <!-- set to #1 if the Enterprice Library 5.0 is installed (not set otherwise) -->
+  <Fragment>
+    <Property Id="ENTERPRICELIBRARY50" Secure="yes">
+      <RegistrySearch Id="EnterproceLibraryV50" Root="HKLM" Key="Software\Microsoft\Enterprise Library v5.0" Name="InstallDir" Type="raw" />
+    </Property>
+  </Fragment>
+
+</Wix>

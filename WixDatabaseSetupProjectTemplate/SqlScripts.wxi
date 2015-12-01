@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) $registeredorganization$.  All rights reserved.
+-->
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi" 
+         xmlns:sql="http://schemas.microsoft.com/wix/SqlExtension">
+  
+  <?ifndef SqlScriptId ?>
+    <?error SqlScriptId must be defined ?>
+  <?endif?>
+
+  <!-- *** Create Tables *** -->
+  <sql:SqlScript Id="CreateTables$(var.SqlScriptId)_001" Sequence="001" BinaryKey="CreateTables" ExecuteOnInstall="yes" ExecuteOnReinstall="no" ContinueOnError="no" />
+  <!-- *** Set database version *** -->
+  <sql:SqlString Id="SetDataBaseVersion$(var.SqlScriptId)_002" Sequence="002" SQL ="
+          IF NOT EXISTS(SELECT value FROM ::fn_listextendedproperty('DatabaseVersionNumber', null, null, null, null, null, null))
+	          EXEC sp_addextendedproperty 'DatabaseVersionNumber', '[SQL_DATABASEVERSION]'
+          ELSE
+	          EXEC sp_updateextendedproperty 'DatabaseVersionNumber', '[SQL_DATABASEVERSION]'
+          " ExecuteOnInstall="yes" ExecuteOnReinstall="no" ContinueOnError="no"/>
+  <!-- *** Set database original name *** -->
+  <sql:SqlString Id="SetDataBaseOriginalName$(var.SqlScriptId)_003" Sequence="003" SQL ="
+          IF NOT EXISTS(SELECT value FROM ::fn_listextendedproperty('DatabaseOriginalName', null, null, null, null, null, null))
+	          EXEC sp_addextendedproperty 'DatabaseOriginalName', '[SQL_DATABASEORIGINALNAME]'
+          ELSE
+	          EXEC sp_updateextendedproperty 'DatabaseOriginalName', '[SQL_DATABASEORIGINALNAME]'
+          " ExecuteOnInstall="yes" ExecuteOnReinstall="no" ContinueOnError="no"/>
+
+  <!-- *** Procedures *** -->
+  <!--<sql:SqlScript Id="Create$(var.SqlScriptId)_100" Sequence="100" BinaryKey="Procedures" ExecuteOnInstall="yes" ExecuteOnReinstall ="no" ContinueOnError="no" />-->
+</Include>

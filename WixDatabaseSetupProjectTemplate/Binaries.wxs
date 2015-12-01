@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) $registeredorganization$.  All rights reserved.
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <!-- *** Create Tables *** -->
+    <Binary Id="CreateTables" SourceFile="..\$safeprojectname$\Create Scripts\Create.Database.SQL" />
+    <!-- *** Procedures *** -->
+    <!--<Binary Id="Procedures" SourceFile="..\$safeprojectname$\Create Scripts\Procedures.SQL" />-->
+  </Fragment>
+</Wix>

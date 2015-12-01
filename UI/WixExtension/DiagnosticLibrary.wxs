@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <!-- ***  Detect Diagnostic dll  *** -->
+    <Property Id="DIAGNOSTICLIBRARY" Secure="yes">
+      <RegistrySearch Id="DiagnosticLibraryV10" Root="HKLM" Key="Software\Abc software\Diagnostic Library v1.0" Name="InstallDir" Type="raw" />
+    </Property>
+  </Fragment>
+</Wix>

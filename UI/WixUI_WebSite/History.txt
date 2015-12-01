@@ -1,0 +1,18 @@
+﻿File: IIsScripts.vbs
+FIX: Функция EvaluateWebSiteProperties теперь возвращает своство IIS_NEWAPPPOOL
+CHANGE: Изменеа проверка ввода ApplicationPool и VirtualDir
+NEW: Добавлось предупреждение при создании AppPool
+
+File: IIsScripts.vbs, WebsiteDlg.wxs, WixUI_WebSite.wxs
+CHNAGE: Теперь в диалог WebsiteDlg можно указывать путь куда инсталировать свойство IIS_INSTALLDIR
+		А также получать значение пути по умолчанию IIS_INSTALLDIR
+
+File: WebsiteDlg.wxs
+CHNAGE: WebsiteDlg вынесен в отдельный файл
+
+File: IISScript.vbs
+FIX:	Функция EnumVirtualDirectories не работала с IIsWebDirectories
+FIX:	При дениисталяции, если не находился нужный сайт выдавалась ошибка функцией EnumVirtualDirectories,
+		теперь происходит игнорирование конфигурирования веб, установивая свойство SKIPCONFIGUREIIS
+FIX:	Подправлена функция проверки виртульной директории,
+		теперь допустимы симболы '.', '-', '_'.

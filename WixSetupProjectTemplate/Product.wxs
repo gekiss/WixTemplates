@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) $registeredorganization$.  All rights reserved.
+-->
+<?include Product.wxi ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension">
+
+  <Product Id="$(var.ProductCode)" 
+           Name="$(var.ProductName)" 
+           Language="1033" 
+           Version="$(var.ProductVersion)" 
+           Manufacturer="$(var.ProductManufacturer)" 
+           UpgradeCode="$(var.ProductUpgradeCode)">
+    
+		<Package InstallerVersion="200" Compressed="yes" Manufacturer="$(var.ProductManufacturer)" ShortNames="no" />
+
+    <!-- ***  Media ***  -->
+    <Media Id="1" Cabinet="Product.cab" EmbedCab="yes" />
+
+    <!-- *** Icons *** -->
+    <!-- TODO: Set product Icon
+    <Property Id="ARPPRODUCTICON">Ivis</Property>
+    <Icon Id="Ivis" SourceFile="Bitmaps\ivis_all_in_one.ico"/>-->
+
+    <!-- *** Feature  *** -->
+    <Feature Id="ProductFeature" Title="$(var.ProductName)" Level="1" Absent="disallow" Display="expand" AllowAdvertise="no" TypicalDefault="install" ConfigurableDirectory="TARGETDIR">
+      <ComponentGroupRef Id="Content"/>
+      <ComponentGroupRef Id="Binaries"/>
+    </Feature>
+
+    <Property Id="ARPNOMODIFY" Value="1" />
+    <PropertyRef Id="NEWERVERSIONDETECTED"/>
+
+    <WixVariable Id="WixUIDialogBmp" Value="Bitmaps\Main.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="Bitmaps\Banner.bmp" />
+    <!-- TODO: Set product Licence agreements
+    <WixVariable Id="WixUILicenseRtf" Value="EULA.rtf" />-->
+    <UIRef Id="WixUI_Mondo" />
+
+    <CustomAction Id="SetTARGETDIR" Property="TARGETDIR" Value="[ProgramFilesFolder]$(var.ProductManufacturer)\$(var.ProductName)" Execute="immediate" />
+
+    <!-- *** Install Sequences *** -->
+    <InstallExecuteSequence>
+      <LaunchConditions><![CDATA[NOT Instlled]]></LaunchConditions>
+      <FindRelatedProducts Before="LaunchConditions" />
+      <RemoveExistingProducts After="InstallValidate" />
+      <Custom Action="SetTARGETDIR" After="FileCost"><![CDATA[TARGETDIR=""]]></Custom>
+    </InstallExecuteSequence>
+
+    <InstallUISequence>
+      <LaunchConditions><![CDATA[NOT Instlled]]></LaunchConditions>
+      <FindRelatedProducts Before="LaunchConditions" />
+      <Custom Action="SetTARGETDIR" After="FileCost"><![CDATA[TARGETDIR=""]]></Custom>
+    </InstallUISequence>
+
+  </Product>
+</Wix>

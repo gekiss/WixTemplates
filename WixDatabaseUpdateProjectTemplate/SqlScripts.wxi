@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) $registeredorganization$.  All rights reserved.
+-->
+<Include xmlns="http://schemas.microsoft.com/wix/2006/wi" 
+         xmlns:sql="http://schemas.microsoft.com/wix/SqlExtension">
+  
+  <?ifndef SqlScriptId ?>
+    <?error SqlScriptId must be defined ?>
+  <?endif?>
+
+  <?if $(var.SqlUpdateVersion) = "1.0.0001" ?>
+    <!-- TODO: define version 1.0.0001 Update sql scripts
+    <sql:SqlScript Id="Update_0001_$(var.SqlScriptId)_001" Sequence="001" BinaryKey="Update1" SqlDb="DataBase" ExecuteOnInstall="yes" ExecuteOnReinstall ="no" ContinueOnError="no" />
+    -->
+
+    <!-- *** Set database version *** -->
+    <sql:SqlString Id="SetDataBaseVersion_0001_$(var.SqlScriptId)_008" Sequence="008" SQL ="
+            IF NOT EXISTS(SELECT value FROM ::fn_listextendedproperty('DatabaseVersionNumber', null, null, null, null, null, null))
+              EXEC sp_addextendedproperty 'DatabaseVersionNumber', '$(var.SqlUpdateVersion)'
+            ELSE
+              EXEC sp_updateextendedproperty 'DatabaseVersionNumber', '$(var.SqlUpdateVersion)'
+            "  SqlDb="DataBase" ExecuteOnInstall="yes" ExecuteOnReinstall="no" ContinueOnError="no"/>
+  <?endif?>
+
+  <?if $(var.SqlUpdateVersion) = "1.0.0002" ?>
+  <!-- TODO: define Update scripts
+    <sql:SqlScript Id="Update_0002_$(var.SqlScriptId)_009" Sequence="009" BinaryKey="Update2" SqlDb="DataBase" ExecuteOnInstall="yes" ExecuteOnReinstall ="no" ContinueOnError="no" />
+    -->
+
+  <!-- *** Set database version *** -->
+    <sql:SqlString Id="SetDataBaseVersion_0002_$(var.SqlScriptId)_010" Sequence="010" SQL ="
+              IF NOT EXISTS(SELECT value FROM ::fn_listextendedproperty('DatabaseVersionNumber', null, null, null, null, null, null))
+                EXEC sp_addextendedproperty 'DatabaseVersionNumber', '$(var.SqlUpdateVersion)'
+              ELSE
+                EXEC sp_updateextendedproperty 'DatabaseVersionNumber', '$(var.SqlUpdateVersion)'
+              " SqlDb="DataBase" ExecuteOnInstall="yes" ExecuteOnReinstall="no" ContinueOnError="no"/>
+  <?endif?>
+
+</Include>

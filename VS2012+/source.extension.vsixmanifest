@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="fb90a487-ccf7-428d-86fd-5467bc0e1a62" Version="1.1" Language="en-US" Publisher="ABC software" />
+    <DisplayName>WixTemplates</DisplayName>
+    <Description>Information about my package</Description>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Version="[12.0,13.0)" Id="Microsoft.VisualStudio.Pro" />
+    <InstallationTarget Version="[12.0,13.0)" Id="Microsoft.VisualStudio.Premium" />
+    <InstallationTarget Version="[12.0,13.0)" Id="Microsoft.VisualStudio.Ultimate" />
+  </Installation>
+  <Dependencies>
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="WixSetupProjectTemplate" Path="ProjectTemplates" d:TargetPath="|WixSetupProjectTemplate;TemplateProjectOutputGroup|" d:VsixSubPath="ProjectTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="WixWebSetupProjectTemplate" Path="ProjectTemplates" d:TargetPath="|WixWebSetupProjectTemplate;TemplateProjectOutputGroup|" d:VsixSubPath="ProjectTemplates" />
+  </Assets>
+</PackageManifest>

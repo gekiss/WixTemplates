@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) $registeredorganization$.  All rights reserved.
+-->
+<?include Product.wxi ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <!-- ***  Privileged ***  -->
+    <Condition Message="An administrator must approve or install [ProductName].">
+      <![CDATA[Privileged]]>
+    </Condition>
+
+    <!-- ***  Major upgrade ***  -->
+    <Property Id="NEWERVERSIONDETECTED" Secure="yes" />
+    <Property Id="OLDERVERSIONBEINGUPGRADED" Secure="yes" />
+    <Upgrade Id="$(var.ProductUpgradeCode)">
+      <UpgradeVersion Minimum="$(var.ProductVersion)" OnlyDetect="yes" Property="NEWERVERSIONDETECTED" />
+      <UpgradeVersion Minimum="0.0.0.0" IncludeMinimum="yes" Maximum="$(var.ProductVersion)" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED" />
+    </Upgrade>
+    <Condition Message="Unable to install because a newer version of [ProductName] is already installed.">
+      <![CDATA[NOT NEWERVERSIONDETECTED]]>
+    </Condition>
+
+    <!-- ***  Detect Framework  *** -->
+    $if$ ($targetframeworkversion$ >= 4.5)
+    <PropertyRef Id="NETFRAMEWORK45"/>
+    <Condition Message="This setup requires the .NET Framework version 4.5. Please install the .NET Framework and run this setup again.">
+      <![CDATA[Installed OR NETFRAMEWORK45]]>
+    </Condition>
+    $elseif$ ($targetframeworkversion$ >= 4.0)
+    <PropertyRef Id="NETFRAMEWORK40FULL"/>
+    <Condition Message="This setup requires the .NET Framework version 4.0 Full. Please install the .NET Framework and run this setup again.">
+      <![CDATA[Installed OR NETFRAMEWORK40FULL]]>
+    </Condition>
+    $elseif$ ($targetframeworkversion$ >= 3.5)
+    <PropertyRef Id="NETFRAMEWORK35"/>
+    <Condition Message="This setup requires the .NET Framework version 3.5. Please install the .NET Framework and run this setup again.">
+      <![CDATA[Installed OR NETFRAMEWORK35]]>
+    </Condition>
+    $else$
+    <PropertyRef Id="NETFRAMEWORK20"/>
+    <Condition Message="This setup requires the .NET Framework version 2.0. Please install the .NET Framework and run this setup again.">
+      <![CDATA[Installed OR NETFRAMEWORK20]]>
+    </Condition>
+    $endif$
+
+  </Fragment>
+</Wix>

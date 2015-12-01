@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) $registeredorganization$.  All rights reserved.
+-->
+<?include Product.wxi ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension">
+  <Fragment>
+    <!-- ***  Detect IIS *** -->
+    <PropertyRef Id="IISMAJORVERSION"/>
+    <?if $(var.Platform) = x86 ?>
+    <Condition Message="This setup requires Internet Information Server 5.0 or higher and Windows XP or higher.  This setup cannot be installed on Windows 95, Windows 98, or Windows Me.  Please install Internet Information Server and run this setup again.">
+      <![CDATA[IISMAJORVERSION >= "#5"]]>
+    </Condition>
+    <?else ?>
+    <Condition Message="This setup requires Internet Information Server 7.0 or higher and Windows 2008 Server or higher.  This setup cannot be installed on Windows NT or Windows 2003.  Please install Internet Information Server and run this setup again.">
+      <![CDATA[IISMAJORVERSION >= "#7"]]>
+    </Condition>
+    <?endif ?>
+
+    <!-- ***  Detect IIS Metabase Compatibility  *** -->
+    <Property Id="IIS_METABASE_COMPATIBILITY">
+      <RegistrySearch Id="IISMCSearch" Root="HKLM" Key="Software\Microsoft\InetStp\Components" Name="Metabase" Type="raw" />
+    </Property>
+    <Condition Message="If you are running IIS7 the IIS Metabase Compatibility feature must be installed. Please install the components and run this setup again.">
+      <![CDATA[IISMAJORVERSION < "#7" OR (IISMAJORVERSION >= "#7" AND IIS_METABASE_COMPATIBILITY)]]>
+    </Condition>
+
+
+    <!-- ***  Inicialize properties *** -->
+    <Property Id="IIS_VIRTUALDIR" Value="$(var.ProductName)" />
+    <Property Id="IIS_WEBSITE" Value="Default Web Site" />
+    <Property Id="IIS_APPPOOL" Value="DefaultAppPool" />
+
+    <iis:WebAppPool Id="DefaultAppPool" Name="[IIS_APPPOOL]" />
+    <iis:WebSite Id="DefaultWebSite" Description="[IIS_WEBSITE]">
+      <iis:WebAddress Id="DefaultWebSiteAddress" Port="[IIS_TARGETWEBPORT]" IP="[IIS_IPADDRESS]" Header="[IIS_HEADER]"/>
+    </iis:WebSite>
+    <iis:WebDirProperties Id="WebVirtualDirProperties" Execute="no" Script="yes" Read="yes" WindowsAuthentication="yes" AnonymousAccess="yes" IIsControlledPassword="yes" />
+
+    <!-- ***  Componentes *** -->
+    <DirectoryRef Id="TARGETDIR">
+      <?if $(var.Platform) = x86 ?>
+      <!-- ***  Instalācija uz IIS5 X86 *** -->
+      <Component Id="WebVirtualDirComponent" Guid="{$guid3$}">
+        <Condition><![CDATA[IISMAJORVERSION = "#5"]]></Condition>
+
+        <iis:WebVirtualDir Id="WebVirtualDir" Alias="[IIS_VIRTUALDIR]" Directory="TARGETDIR" WebSite="DefaultWebSite" DirProperties="WebVirtualDirProperties">
+          <iis:WebApplication Id="WebApplication" Name="[IIS_VIRTUALDIR]" />
+        </iis:WebVirtualDir>
+      </Component >
+
+      <!-- ***  IIS 6 with existing ApplicationPool X86 *** -->
+      <Component Id="WebVirtualDirComponent_IIs6" Guid="{$guid4$}" >
+        <Condition><![CDATA[IISMAJORVERSION > "#5" AND IIS_CREATEAPPPOOL <> 1]]></Condition>
+
+        <iis:WebVirtualDir Id="WebVirtualDir_IIs6" Alias="[IIS_VIRTUALDIR]" Directory="TARGETDIR" WebSite="DefaultWebSite" DirProperties="WebVirtualDirProperties">
+          <iis:WebApplication Id="WebApplication_IIs6" Name="[IIS_VIRTUALDIR]" WebAppPool="DefaultAppPool"/>
+        </iis:WebVirtualDir>
+
+      </Component>
+
+      <!-- ***  IIS 6 with new ApplicationPool X86 *** -->
+      <Component Id="WebVirtualDirComponent_IIs6_CreateAppPool" Guid="{$guid5$}" >
+        <Condition><![CDATA[IISMAJORVERSION > "#5" AND IIS_CREATEAPPPOOL = 1]]></Condition>
+
+        <iis:WebAppPool Id="WebApplicationPool_IIs6" Name="[IIS_NEWAPPPOOL]" Identity="networkService">
+        </iis:WebAppPool>
+
+        <iis:WebVirtualDir Id="WebVirtualDir_IIs6_CreateAppPool" Alias="[IIS_VIRTUALDIR]" Directory="TARGETDIR" WebSite="DefaultWebSite" DirProperties="WebVirtualDirProperties">
+          <iis:WebApplication Id="WebApplication_IIs6_CreateAppPool" Name="[IIS_VIRTUALDIR]" WebAppPool="WebApplicationPool_IIs6"/>
+        </iis:WebVirtualDir>
+
+      </Component>
+      <?endif ?>
+
+      <!-- *** IIS 7 with existing ApplicationPool X86/X64 *** -->
+      <Component Id="WebVirtualDirComponent_IIs7" Guid="{$guid6$}" >
+        <Condition><![CDATA[IISMAJORVERSION >= "#7" AND IIS_CREATEAPPPOOL <> 1]]></Condition>
+
+        <iis:WebVirtualDir Id="WebVirtualDir_IIs7" Alias="[IIS_VIRTUALDIR]" Directory="TARGETDIR" WebSite="DefaultWebSite" DirProperties="WebVirtualDirProperties">
+          <iis:WebApplication Id="WebApplication_IIs7" Name="[IIS_VIRTUALDIR]" WebAppPool="DefaultAppPool"/>
+        </iis:WebVirtualDir>
+      </Component>
+
+      <!-- *** IIS 7 with new ApplicationPool X86/X64 *** -->
+      <Component Id="WebVirtualDirComponent_IIs7_CreateAppPool" Guid="{$guid7$}" >
+        <Condition><![CDATA[IISMAJORVERSION >= "#7" AND IIS_CREATEAPPPOOL = 1]]></Condition>
+
+        $if$ ($targetframeworkversion$ >= 4.0)
+        <iis:WebAppPool Id="WebApplicationPool_IIs7" Name="[IIS_NEWAPPPOOL]" Identity="networkService" ManagedPipelineMode="integrated" ManagedRuntimeVersion="v4.0">
+        </iis:WebAppPool>
+        $else$
+        <iis:WebAppPool Id="WebApplicationPool_IIs7" Name="[IIS_NEWAPPPOOL]" Identity="networkService" ManagedPipelineMode="integrated" ManagedRuntimeVersion="v2.0">
+        </iis:WebAppPool>
+        $endif$
+
+        <iis:WebVirtualDir Id="WebVirtualDir_IIs7_CreateAppPool" Alias="[IIS_VIRTUALDIR]" Directory="TARGETDIR" WebSite="DefaultWebSite" DirProperties="WebVirtualDirProperties">
+          <iis:WebApplication Id="WebApplication_IIs7_CreateAppPool" Name="[IIS_VIRTUALDIR]" WebAppPool="WebApplicationPool_IIs7"/>
+        </iis:WebVirtualDir>
+      </Component>
+
+    </DirectoryRef>
+
+    <ComponentGroup Id="IIS">
+      <?if $(var.Platform) = x86 ?>
+      <ComponentRef Id="WebVirtualDirComponent" />
+      <ComponentRef Id="WebVirtualDirComponent_IIs6" />
+      <ComponentRef Id="WebVirtualDirComponent_IIs6_CreateAppPool" />
+      <?endif ?>
+      <ComponentRef Id="WebVirtualDirComponent_IIs7" />
+      <ComponentRef Id="WebVirtualDirComponent_IIs7_CreateAppPool" />
+    </ComponentGroup>
+  </Fragment>
+</Wix>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) $registeredorganization$.  All rights reserved.
+-->
+<Include>
+  <?define DatabaseVersion = 1.0.0000 ?>
+  <?define DatabaseOriginalName = $safeprojectname$ ?>
+  <?define ProductCode = "*" ?>
+  <?define ProductUpgradeCode = "{$guid2$}" ?>
+  <?define ProductManufacturer = "$registeredorganization$" ?>
+</Include>

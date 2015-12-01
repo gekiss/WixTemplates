@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) $registeredorganization$.  All rights reserved.
+-->
+<?include Product.wxi ?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" 
+     xmlns:sql="http://schemas.microsoft.com/wix/SqlExtension"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  
+	<Product Id="$(var.ProductCode)" 
+           Name="$(var.DatabaseOriginalName) DataBase v$(var.DatabaseVersion)" 
+           Language="1033" 
+           Version="$(var.DatabaseVersion)" 
+           Manufacturer="$(var.ProductManufacturer)" 
+           UpgradeCode="$(var.ProductUpgradeCode)">
+
+    <Package InstallerVersion="200" Compressed="yes" Manufacturer="$(var.ProductManufacturer)" ShortNames="no" />
+
+    <!-- *** Icons *** -->
+    <!-- TODO: Set product Icon
+    <Property Id="ARPPRODUCTICON">Ivis</Property>
+    <Icon Id="Ivis" SourceFile="Bitmaps\ivis_all_in_one.ico"/>-->
+
+    <!-- *** SQL PROPERTIES *** -->
+    <Property Id ="SQL_DATABASEORIGINALNAME" Value="$(var.DatabaseOriginalName)" />
+    <Property Id ="SQL_DATABASEVERSION" Value ="$(var.DatabaseVersion)" />
+    <Property Id ="SQL_CREATEDATABASE" Value ="1" />
+
+    <PropertyRef Id ="SQL_SERVER"/>
+    <PropertyRef Id ="SQL_DATABASENAME"/>
+    <PropertyRef Id ="SQL_USERNAME"/>
+    <PropertyRef Id ="SQL_PASSWORD"/>
+    <PropertyRef Id ="SQL_AUTHENTICATION"/>
+
+    <!-- *** Directories *** -->
+    <Directory Id="TARGETDIR" Name="SourceDir" FileSource=".\">
+      <Component Id="DatabaseCreate" Guid="">
+        <Condition><![CDATA[SQL_AUTHENTICATION <> "user"]]></Condition>
+
+        <sql:SqlDatabase Id="DataBase" Server="[SQL_SERVER]" Database="[SQL_DATABASENAME]"
+        CreateOnInstall="yes" ConfirmOverwrite="yes" DropOnUninstall="no">
+
+          <?define SqlScriptId = ""?>
+          <?include SqlScripts.wxi?>
+        </sql:SqlDatabase >
+      </Component>
+      <Component Id="DatabaseCreate_User" Guid="">
+        <Condition><![CDATA[SQL_AUTHENTICATION = "user"]]></Condition>
+
+        <util:User Id="SQLUser" Name="[SQL_USERNAME]" Password="[SQL_PASSWORD]" />
+        <sql:SqlDatabase Id="DataBase_User" Server="[SQL_SERVER]" Database="[SQL_DATABASENAME]" User="SQLUser"
+        CreateOnInstall="yes" ConfirmOverwrite="yes" DropOnUninstall="no">
+
+          <?undef SqlScriptId?>
+          <?define SqlScriptId = "User"?>
+          <?include SqlScripts.wxi?>
+        </sql:SqlDatabase >
+      </Component>
+    </Directory >
+
+    <!-- *** Feature  *** -->
+    <Feature Id="ProductFeature" Title="$(var.DatabaseOriginalName)" Level="1">
+      <ComponentRef Id="DatabaseCreate" />
+      <ComponentRef Id="DatabaseCreate_User" />
+    </Feature>
+
+    <WixVariable Id="WixUIDialogBmp" Value="Bitmaps\Main.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="Bitmaps\Banner.bmp" />
+    <!-- TODO: Set product Licence agreements
+    <WixVariable Id="WixUILicenseRtf" Value="EULA.rtf" />-->
+    <UIRef Id="WixUI_DataBase"/>
+    
+    <!-- *** Install Sequences *** -->
+    <InstallExecuteSequence>
+      <PublishFeatures Suppress="yes" />
+      <RegisterProduct Suppress="yes" />
+      <PublishProduct Suppress="yes" />
+      <RegisterUser Suppress="yes" />
+    </InstallExecuteSequence>
+ 
+  </Product>
+</Wix>
