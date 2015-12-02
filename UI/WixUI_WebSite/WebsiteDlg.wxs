@@ -13,7 +13,7 @@
     <CustomAction Id="IIS_SetApplicationPoolName" BinaryKey="IIsScripts" VBScriptCall="SetApplicationPoolName" Execute="immediate" Return="check"/>
     
     <InstallExecuteSequence>
-      <Custom Action="IIS_EvaluateWebSiteProperties" Before="RemoveFiles"><![CDATA[Installed]]></Custom>
+      <Custom Action="IIS_EvaluateWebSiteProperties" Before="RemoveFiles"><![CDATA[Installed AND NOT PATCH]]></Custom>
     </InstallExecuteSequence>
     
     <UI>
@@ -32,18 +32,18 @@
           </ComboBox>
         </Control>
         <Control Id="AppPoolLabel" Type="Text" X="20" Y="126" Width="290" Height="13" Text="Application Pool:" Hidden="yes">
-          <Condition Action="show"><![CDATA[IISMAJORVERSION > "#5"]]></Condition>
+          <Condition Action="show"><![CDATA[((IISMAJORVERSION > "#5") Or (IISMAJORVERSION = "#10"))]]></Condition>
         </Control>
         <Control Id="AppPoolDirCombo" Type="ComboBox" X="20" Y="139" Width="320" Height="120" Property="IIS_APPPOOL" ComboList="yes" Hidden="yes" Text="[IIS_APPPOOL]">
-          <Condition Action="show"><![CDATA[IISMAJORVERSION > "#5"]]></Condition>
+          <Condition Action="show"><![CDATA[((IISMAJORVERSION > "#5") Or (IISMAJORVERSION = "#10"))]]></Condition>
           <Condition Action="enable"><![CDATA[IIS_CREATEAPPPOOL <> 1]]></Condition>
           <Condition Action="disable"><![CDATA[IIS_CREATEAPPPOOL = 1]]></Condition>
         </Control>
         <Control Id="CreateAppPool" Type="CheckBox" X="20" Y="161" Width="226" Height="18" Property="IIS_CREATEAPPPOOL" CheckBoxValue="1" Text="Create new application pool"  Hidden ="yes">
-          <Condition Action="show"><![CDATA[IISMAJORVERSION > "#5"]]></Condition>
+          <Condition Action="show"><![CDATA[((IISMAJORVERSION > "#5") Or (IISMAJORVERSION = "#10"))]]></Condition>
         </Control >
         <!--<Control Id="AppPoolDir" Type="Edit" X="20" Y="184" Width="320" Height="18" Property="IIS_NEWAPPPOOL" Hidden="yes">
-          <Condition Action="show"><![CDATA[IISMAJORVERSION > "#5"]]></Condition>
+          <Condition Action="show"><![CDATA[((IISMAJORVERSION > "#5") Or (IISMAJORVERSION = "#10"))]]></Condition>
           <Condition Action="enable"><![CDATA[IIS_CREATEAPPPOOL = 1]]></Condition>
           <Condition Action="disable"><![CDATA[IIS_CREATEAPPPOOL <> 1]]></Condition>
         </Control>-->

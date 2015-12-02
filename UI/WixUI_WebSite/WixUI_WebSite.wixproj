@@ -42,16 +42,6 @@
       <Name>WixIIsExtension</Name>
     </WixExtension>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WixExtension\WixExtension.wixproj">
-      <Name>WixExtension</Name>
-      <Project>{5f8c8792-1106-4b2f-b956-89844e1a695e}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
