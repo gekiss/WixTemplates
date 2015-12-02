@@ -13,7 +13,7 @@
            Manufacturer="$(var.ProductManufacturer)" 
            UpgradeCode="$(var.ProductUpgradeCode)">
     
-		<Package InstallerVersion="200" Compressed="yes" Manufacturer="$(var.ProductManufacturer)" ShortNames="no" InstallScope="perMachine" />
+		<Package InstallerVersion="400" Compressed="yes" Manufacturer="$(var.ProductManufacturer)" ShortNames="no" InstallScope="perMachine" />
 
     <!-- ***  Media ***  -->
     <Media Id="1" Cabinet="Product.cab" EmbedCab="yes" />
@@ -41,13 +41,13 @@
 
     <!-- *** Install Sequences *** -->
     <InstallExecuteSequence>
-      <LaunchConditions><![CDATA[NOT Instlled]]></LaunchConditions>
+      <LaunchConditions><![CDATA[NOT Installed]]></LaunchConditions>
       <FindRelatedProducts Before="LaunchConditions" />
       <RemoveExistingProducts After="InstallValidate" />
     </InstallExecuteSequence>
 
     <InstallUISequence>
-      <LaunchConditions><![CDATA[NOT Instlled]]></LaunchConditions>
+      <LaunchConditions><![CDATA[NOT Installed]]></LaunchConditions>
       <FindRelatedProducts Before="LaunchConditions" />
     </InstallUISequence>
 

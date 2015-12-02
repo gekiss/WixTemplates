@@ -10,11 +10,11 @@
     <PropertyRef Id="IISMAJORVERSION"/>
     <?if $(var.Platform) = x86 ?>
     <Condition Message="This setup requires Internet Information Server 5.0 or higher and Windows XP or higher.  This setup cannot be installed on Windows 95, Windows 98, or Windows Me.  Please install Internet Information Server and run this setup again.">
-      <![CDATA[IISMAJORVERSION >= "#5"]]>
+      <![CDATA[(IISMAJORVERSION >= "#5") OR (IISMAJORVERSION = "#10")]]>
     </Condition>
     <?else ?>
     <Condition Message="This setup requires Internet Information Server 7.0 or higher and Windows 2008 Server or higher.  This setup cannot be installed on Windows NT or Windows 2003.  Please install Internet Information Server and run this setup again.">
-      <![CDATA[IISMAJORVERSION >= "#7"]]>
+      <![CDATA[(IISMAJORVERSION >= "#7") OR (IISMAJORVERSION = "#10")]]>
     </Condition>
     <?endif ?>
 
@@ -23,9 +23,8 @@
       <RegistrySearch Id="IISMCSearch" Root="HKLM" Key="Software\Microsoft\InetStp\Components" Name="Metabase" Type="raw" />
     </Property>
     <Condition Message="If you are running IIS7 the IIS Metabase Compatibility feature must be installed. Please install the components and run this setup again.">
-      <![CDATA[IISMAJORVERSION < "#7" OR (IISMAJORVERSION >= "#7" AND IIS_METABASE_COMPATIBILITY)]]>
+      <![CDATA[(IISMAJORVERSION < "#7") OR (((IISMAJORVERSION >= "#7") OR (IISMAJORVERSION = "#10")) AND IIS_METABASE_COMPATIBILITY)]]>
     </Condition>
-
 
     <!-- ***  Inicialize properties *** -->
     <Property Id="IIS_VIRTUALDIR" Value="$(var.ProductName)" />
@@ -43,7 +42,7 @@
       <?if $(var.Platform) = x86 ?>
       <!-- ***  Instalācija uz IIS5 X86 *** -->
       <Component Id="WebVirtualDirComponent" Guid="{$guid3$}">
-        <Condition><![CDATA[IISMAJORVERSION = "#5"]]></Condition>
+        <Condition><![CDATA[IISMAJORVERSION = #5]]></Condition>
 
         <iis:WebVirtualDir Id="WebVirtualDir" Alias="[IIS_VIRTUALDIR]" Directory="TARGETDIR" WebSite="DefaultWebSite" DirProperties="WebVirtualDirProperties">
           <iis:WebApplication Id="WebApplication" Name="[IIS_VIRTUALDIR]" />
@@ -52,7 +51,7 @@
 
       <!-- ***  IIS 6 with existing ApplicationPool X86 *** -->
       <Component Id="WebVirtualDirComponent_IIs6" Guid="{$guid4$}" >
-        <Condition><![CDATA[IISMAJORVERSION > "#5" AND IIS_CREATEAPPPOOL <> 1]]></Condition>
+        <Condition><![CDATA[(IISMAJORVERSION > "#5") AND (IIS_CREATEAPPPOOL <> 1)]]></Condition>
 
         <iis:WebVirtualDir Id="WebVirtualDir_IIs6" Alias="[IIS_VIRTUALDIR]" Directory="TARGETDIR" WebSite="DefaultWebSite" DirProperties="WebVirtualDirProperties">
           <iis:WebApplication Id="WebApplication_IIs6" Name="[IIS_VIRTUALDIR]" WebAppPool="DefaultAppPool"/>
@@ -62,7 +61,7 @@
 
       <!-- ***  IIS 6 with new ApplicationPool X86 *** -->
       <Component Id="WebVirtualDirComponent_IIs6_CreateAppPool" Guid="{$guid5$}" >
-        <Condition><![CDATA[IISMAJORVERSION > "#5" AND IIS_CREATEAPPPOOL = 1]]></Condition>
+        <Condition><![CDATA[(IISMAJORVERSION > "#5") AND (IIS_CREATEAPPPOOL = 1)]]></Condition>
 
         <iis:WebAppPool Id="WebApplicationPool_IIs6" Name="[IIS_NEWAPPPOOL]" Identity="networkService">
         </iis:WebAppPool>
@@ -74,18 +73,18 @@
       </Component>
       <?endif ?>
 
-      <!-- *** IIS 7 with existing ApplicationPool X86/X64 *** -->
+      <!-- *** IIS 7+ with existing ApplicationPool X86/X64 *** -->
       <Component Id="WebVirtualDirComponent_IIs7" Guid="{$guid6$}" >
-        <Condition><![CDATA[IISMAJORVERSION >= "#7" AND IIS_CREATEAPPPOOL <> 1]]></Condition>
+        <Condition><![CDATA[((IISMAJORVERSION >= "#7") OR (IISMAJORVERSION = "#10")) AND (IIS_CREATEAPPPOOL <> 1)]]></Condition>
 
         <iis:WebVirtualDir Id="WebVirtualDir_IIs7" Alias="[IIS_VIRTUALDIR]" Directory="TARGETDIR" WebSite="DefaultWebSite" DirProperties="WebVirtualDirProperties">
           <iis:WebApplication Id="WebApplication_IIs7" Name="[IIS_VIRTUALDIR]" WebAppPool="DefaultAppPool"/>
         </iis:WebVirtualDir>
       </Component>
 
-      <!-- *** IIS 7 with new ApplicationPool X86/X64 *** -->
+      <!-- *** IIS 7+ with new ApplicationPool X86/X64 *** -->
       <Component Id="WebVirtualDirComponent_IIs7_CreateAppPool" Guid="{$guid7$}" >
-        <Condition><![CDATA[IISMAJORVERSION >= "#7" AND IIS_CREATEAPPPOOL = 1]]></Condition>
+        <Condition><![CDATA[((IISMAJORVERSION >= "#7") OR (IISMAJORVERSION = "#10")) AND (IIS_CREATEAPPPOOL = 1)]]></Condition>
 
         $if$ ($targetframeworkversion$ >= 4.0)
         <iis:WebAppPool Id="WebApplicationPool_IIs7" Name="[IIS_NEWAPPPOOL]" Identity="networkService" ManagedPipelineMode="integrated" ManagedRuntimeVersion="v4.0">

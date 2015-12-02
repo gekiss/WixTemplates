@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="fb90a487-ccf7-428d-86fd-5467bc0e1a62" Version="1.1" Language="en-US" Publisher="ABC software" />
-    <DisplayName>WixTemplates</DisplayName>
-    <Description>Information about my package</Description>
+    <Identity Id="fb90a487-ccf7-428d-86fd-5467bc0e1a62" Version="1.1.1" Language="en-US" Publisher="ABC software" />
+    <DisplayName>Abc WIX Setup Projects</DisplayName>
+    <Description xml:space="preserve">Creates an WiX installer project to install WebApplication </Description>
+    <License>LICENSE</License>
   </Metadata>
   <Installation>
     <InstallationTarget Version="[12.0,13.0)" Id="Microsoft.VisualStudio.Pro" />
