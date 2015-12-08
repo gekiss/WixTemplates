@@ -13,7 +13,7 @@
     <CustomAction Id="IIS_SetApplicationPoolName" BinaryKey="IIsScripts" VBScriptCall="SetApplicationPoolName" Execute="immediate" Return="check"/>
     
     <InstallExecuteSequence>
-      <Custom Action="IIS_EvaluateWebSiteProperties" Before="RemoveFiles"><![CDATA[Installed AND NOT PATCH]]></Custom>
+      <Custom Action="IIS_EvaluateWebSiteProperties" Before="RemoveFiles"><![CDATA[Installed AND NOT (PATCH OR MSIPATCHREMOVE)]]></Custom>
     </InstallExecuteSequence>
     
     <UI>

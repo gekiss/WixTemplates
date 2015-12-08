@@ -1,4 +1,7 @@
-﻿File:	WixUI_WebSite.wxs, WebsiteDlg.wxs
+﻿File:	WebsiteDlg.wxs
+FIX:	не вызваем скрипт при удалении PATCH (нет прав)
+
+File:	WixUI_WebSite.wxs, WebsiteDlg.wxs
 FIX:	Поддержка IIS 10
 FIX:	Убираем из последовательности окна LicenseAgreementDlg, InstallDirDlg, WebsiteDlg если PATCH
 
